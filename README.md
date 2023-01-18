@@ -20,8 +20,15 @@ struct Todo: Codable {
 @Forever("counter") var counter = 1
 ```
 
+## Don't like _Forever_? Use another one.
+```swift
+@DontDie("name") var name = "Potato"
+@DontLeaveMe("todo") var todo = Todo(...)
+@BePersistent("a") var b = true
+```
+
 ## Installation
-## Requirements
+### Requirements
 | Platform | Version       |
 |:--------:|:--------------|
 |   iOS    | 13.0 or later |
@@ -29,5 +36,5 @@ struct Todo: Codable {
 | watchOS  | 6.0 or later  |
 |   tvOS   | 13.0 or later |
 
-## Add as Swift Package
+### Add as Swift Package
 In Xcode, File → Add Packages… → Paste `https://github.com/jiachenyee/forever` in the search field.
