@@ -28,7 +28,7 @@ struct Todo: Codable {
 ```
 
 ## Installation
-## Requirements
+### Requirements
 | Platform | Version       |
 |:--------:|:--------------|
 |   iOS    | 13.0 or later |
@@ -36,5 +36,5 @@ struct Todo: Codable {
 | watchOS  | 6.0 or later  |
 |   tvOS   | 13.0 or later |
 
-## Add as Swift Package
+### Add as Swift Package
 In Xcode, File → Add Packages… → Paste `https://github.com/jiachenyee/forever` in the search field.
