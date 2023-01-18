@@ -20,6 +20,13 @@ struct Todo: Codable {
 @Forever("counter") var counter = 1
 ```
 
+## Don't like _Forever_? Use another one.
+```swift
+@DontDie("name") var name = "Potato"
+@DontLeaveMe("todo") var todo = Todo(...)
+@BePersistent("a") var b = true
+```
+
 ## Installation
 ## Requirements
 | Platform | Version       |
