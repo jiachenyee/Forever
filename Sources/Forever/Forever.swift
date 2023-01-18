@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+public typealias DontDie = Forever
+public typealias DontLeaveMe = Forever
+public typealias BePersistent = Forever
 @frozen @propertyWrapper public struct Forever<Value: Codable>: DynamicProperty {
     
     public var key: String
@@ -24,7 +27,10 @@ import SwiftUI
         }
     }
     
-    public init(wrappedValue: Value, _ key: String) {
+    public init(wrappedValue: Value, _ key: String,
+                file: String = #file, line: UInt = #line) {
+        precondition(!key.isEmpty, "The key cannot be an empty String.\n\(file):\(line)")
+        
         self.key = key
         
         let archiveURL = Self.getArchiveURL(from: key)
@@ -39,21 +45,21 @@ import SwiftUI
         }
     }
     
-    static func getArchiveURL(from key: String) -> URL {
+    private static func getArchiveURL(from key: String) -> URL {
         let plistName = "\(key).plist"
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(plistName)
         
         return documentsDirectory
     }
     
-    func save(value: Value) {
+    private func save(value: Value) {
         let archiveURL = Self.getArchiveURL(from: key)
         let propertyListEncoder = JSONEncoder()
         let encodedValue = try? propertyListEncoder.encode(value)
         try? encodedValue?.write(to: archiveURL, options: .noFileProtection)
     }
     
-    func getValue() -> Value? {
+    private func getValue() -> Value? {
         let archiveURL = Self.getArchiveURL(from: key)
         let propertyListDecoder = JSONDecoder()
         
