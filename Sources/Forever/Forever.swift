@@ -27,6 +27,10 @@ public typealias BePersistent = Forever
         }
     }
     
+    public var projectedValue: Binding<Value> {
+        _value.projectedValue
+    }
+    
     public init(wrappedValue: Value, _ key: String,
                 file: String = #file, line: UInt = #line) {
         precondition(!key.isEmpty, "The key cannot be an empty String.\n\(file):\(line)")
