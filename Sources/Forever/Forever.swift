@@ -28,7 +28,19 @@ public typealias BePersistent = Forever
     }
     
     public var projectedValue: Binding<Value> {
-        _value.projectedValue
+        Binding {
+            _value.wrappedValue
+        } set: { value, transaction in
+            
+            if transaction.disablesAnimations {
+                self.value = value
+            } else {
+                withAnimation(transaction.animation) {
+                    self.value = value
+                }
+            }
+            save(value: value)
+        }
     }
     
     public init(wrappedValue: Value, _ key: String,
