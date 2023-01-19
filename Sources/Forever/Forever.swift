@@ -11,18 +11,20 @@ import SwiftUI
 public typealias DontDie = Forever
 public typealias DontLeaveMe = Forever
 public typealias BePersistent = Forever
-@frozen @propertyWrapper public struct Forever<Value: Codable>: DynamicProperty {
+@propertyWrapper public struct Forever<Value: Codable>: DynamicProperty {
+    
+    var combineAdapter: CombineAdapter<Value>!
     
     public var key: String
     
     @State private var value: Value
-        
+    
     public var wrappedValue: Value {
         get {
-            return value
+            return getValue() ?? value
         }
         nonmutating set {
-            value = newValue
+            self.value = newValue
             save(value: newValue)
         }
     }
@@ -43,46 +45,17 @@ public typealias BePersistent = Forever
         }
     }
     
-    public init(wrappedValue: Value, _ key: String,
-                file: String = #file, line: UInt = #line) {
+    public init(wrappedValue: Value, _ key: String, file: String = #file, line: UInt = #line) {
         precondition(!key.isEmpty, "The key cannot be an empty String.\n\(file):\(line)")
         
         self.key = key
         
-        let archiveURL = Self.getArchiveURL(from: key)
+        _value = State(wrappedValue: wrappedValue)
         
-        let propertyListDecoder = JSONDecoder()
-        
-        if let retrievedValueData = try? Data(contentsOf: archiveURL),
-           let decodedValue = try? propertyListDecoder.decode(Value.self, from: retrievedValueData) {
-            _value = State(wrappedValue: decodedValue)
-        } else {
-            _value = State(wrappedValue: wrappedValue)
+        if let value = getValue() {
+            _value = State(wrappedValue: value)
         }
-    }
-    
-    private static func getArchiveURL(from key: String) -> URL {
-        let plistName = "\(key).plist"
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(plistName)
         
-        return documentsDirectory
-    }
-    
-    private func save(value: Value) {
-        let archiveURL = Self.getArchiveURL(from: key)
-        let propertyListEncoder = JSONEncoder()
-        let encodedValue = try? propertyListEncoder.encode(value)
-        try? encodedValue?.write(to: archiveURL, options: .noFileProtection)
-    }
-    
-    private func getValue() -> Value? {
-        let archiveURL = Self.getArchiveURL(from: key)
-        let propertyListDecoder = JSONDecoder()
-        
-        if let retrievedValueData = try? Data(contentsOf: archiveURL),
-           let decodedValue = try? propertyListDecoder.decode(Value.self, from: retrievedValueData) {
-            return decodedValue
-        }
-        return nil
+        combineAdapter = .init()
     }
 }
