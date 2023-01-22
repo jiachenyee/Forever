@@ -7,14 +7,14 @@
 
 import Foundation
 import SwiftUI
-
+import Combine
+ 
 public typealias DontDie = Forever
 public typealias DontLeaveMe = Forever
 public typealias BePersistent = Forever
 @propertyWrapper public struct Forever<Value: Codable>: DynamicProperty {
     
-    var combineAdapter: CombineAdapter<Value>!
-    
+    let subject = PassthroughSubject<Value, Never>()
     public var key: String
     
     @State private var value: Value
@@ -55,7 +55,5 @@ public typealias BePersistent = Forever
         if let value = getValue() {
             _value = State(wrappedValue: value)
         }
-        
-        combineAdapter = .init()
     }
 }

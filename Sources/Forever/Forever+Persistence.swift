@@ -16,8 +16,7 @@ extension Forever {
     }
     
     func save(value: Value) {
-        combineAdapter.update(with: value)
-        
+        subject.send(wrappedValue)
         let archiveURL = getArchiveURL(from: key)
         let propertyListEncoder = JSONEncoder()
         let encodedValue = try? propertyListEncoder.encode(value)
