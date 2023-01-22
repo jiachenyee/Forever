@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _counter.sink(receiveValue: { value in
+        _counter.publisher.sink(receiveValue: { value in
             print(value)
         })
         .store(in: &cancellables)

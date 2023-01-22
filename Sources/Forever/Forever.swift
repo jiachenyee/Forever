@@ -12,6 +12,8 @@ import Combine
 public typealias DontDie = Forever
 public typealias DontLeaveMe = Forever
 public typealias BePersistent = Forever
+
+/// A property wrapper to persist data automatically
 @propertyWrapper public struct Forever<Value: Codable>: DynamicProperty {
     
     let subject = PassthroughSubject<Value, Never>()
