@@ -20,6 +20,26 @@ struct Todo: Codable {
 @Forever("counter") var counter = 1
 ```
 
+## Using UIKit? `Forever`+Combine
+Thanks https://github.com/jiachenyee/Forever/issues/1.
+```swift
+class ViewController: UIViewController {
+
+    @Forever("counter") var counter = 1
+    var cancellables = Set<AnyCancellable>()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        _counter.sink(receiveValue: { value in
+            print(value)
+        })
+        .store(in: &cancellables)
+    }
+    //...
+}
+```
+
 ## Don't like _Forever_? Use another one.
 ```swift
 @DontDie("name") var name = "Potato"
