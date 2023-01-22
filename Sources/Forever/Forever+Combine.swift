@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 extension Forever {
-    var publisher: AnyPublisher<Value, Never> {
+    public var publisher: AnyPublisher<Value, Never> {
         subject.eraseToAnyPublisher()
     }
 }
