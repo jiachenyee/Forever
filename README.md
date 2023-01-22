@@ -1,6 +1,8 @@
 # Forever
 ## Persist any `Codable` item.
 
+> For full documentation, click [here](https://forever.jiachen.app/documentation/forever/forever).
+
 ```swift
 @Forever("todos") var todos = [Todo(title: "Feed the cat", isCompleted: true),
                                Todo(title: "Play with cat"),
