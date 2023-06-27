@@ -1,5 +1,9 @@
 # Forever
-## Persist any `Codable` item.
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fjiachenyee%2Fforever%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/jiachenyee/forever)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fjiachenyee%2Fforever%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/jiachenyee/forever)
+
+## Persist any `Codable` value.
 
 > For full documentation, click [here](https://forever.jiachen.app/documentation/forever/forever).
 
